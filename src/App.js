@@ -1,23 +1,35 @@
-import logo from './logo.svg';
 import './App.css';
+import {motion} from 'framer-motion';
+import { useRef, useEffect, useState } from 'react';
+import images from './images'
 
 function App() {
+
+  const [width, setWidth] = useState(0);
+  const carousel = useRef();
+
+  useEffect(() => {
+      setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
+  }, []);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>匚卂乇ㄥㄩ丂</h1>
+      <motion.div ref={carousel} className="carousel" whileTap={{ cursor: "grabbing"}}>
+          <motion.div 
+              drag="x" 
+              dragConstraints={{ right:0, left: -width }} 
+              className="inner-carousel">
+              {images.map(image => {
+                  return(
+                    <motion.div className="item" key={image}>
+                        <img src={image} alt="" />
+                    </motion.div>
+                  );
+              })}
+          </motion.div>
+      </motion.div>
+
+      <h3> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 𝓡𝓮𝓿𝓢𝓱𝓮𝓵𝓵#4941</h3>
     </div>
   );
 }
